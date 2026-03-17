@@ -1,0 +1,37 @@
+lang_code	prompt_frame	token_ratio	verified
+af	Skryf die volgende van hierdie Afrikaanse nuusteks, sonder 'n inleiding; gaan direk voort:\n\n{}	1.8337	1
+ar	أكمل هذا النص الإخباري بالعربية، بدون مقدمة، واصل مباشرة:\n\n{}	3.1857	1
+bg	Напиши продължение на тази новинарска статия на български, без увод; продължи директно:\n\n{}	2.9304	1
+cs	Napiš pokračování tohoto českého zpravodajského textu, bez úvodu, pokračuj přímo:\n\n{}	2.3765	1
+de	Gib eine Fortsetzung dieses deutschen Nachrichtentextes, ohne Einleitung; fahr direkt fort:\n\n{}	1.7129	1
+el	Συνέχισε αυτό το ελληνικό κείμενο ειδήσεων, χωρίς πρόλογο, συνέχισε απευθείας:\n\n{}	4.9233	1
+en	Provide a continuation of this English news text, without preamble, continue directly:\n\n{}	1.1047	1
+es	Escribe la continuación de este texto periodístico en español, sin preámbulos; continúa directamente:\n\n{}	1.4456	1
+et	Kirjuta sellele eestikeelsele uudiste tekstile järg, ilma sissejuhatuseta; jätka otse:\n\n{}	2.5665	1
+fa	ادامه این متن خبری فارسی را بنویس، بدون مقدمه، مستقیم ادامه بده:\n\n{}	3.4687	1
+fi	Kirjoita tälle suomenkieliselle uutistekstille jatko, ilman johdantoa; jatka suoraan:\n\n{}	2.9221	0
+fr	Fournis une suite à ce texte d'actualité en français, sans préambule, continue directement:\n\n{}	1.4397	1
+hi	इस हिंदी समाचार पाठ को आगे लिखो, बिना किसी प्रस्तावना के, सीधे जारी रखो:\n\n{}	4.5985	1
+hr	Napiši nastavak ovog novinskog teksta na hrvatskom jeziku, bez uvoda; nastavi izravno:\n\n{}	2.1804	1
+hu	Írj bevezetés nélküli folytatást az alábbi magyar hírszöveghez, folytasd közvetlenül:\n\n{}	2.5822	1
+id	Tulis kelanjutan dari teks berita bahasa Indonesia berikut, tanpa pendahuluan, lanjutkan langsung:\n\n{}	1.8975	1
+is	Skrifaðu framhald af þessum íslenska fréttatexta, án inngangs, haltu beint áfram:\n\n{}	2.5642	1
+it	Fornisci una continuazione di questo testo giornalistico in italiano, senza preamboli; continua direttamente:\n\n{}	1.5259	1
+ja	この日本語のニュース記事の続きを作成してください。前置きは不要です。直接続けてください。\n\n{}	1.911	1
+kk	Осы қазақша жаңалық мәтінін жалғастыр, кіріспесіз; тікелей жалғастыр:\n\n{}	5.004	1
+ko	이 한국어 뉴스 텍스트의 다음 부분을 서론 없이 바로 이어서 써 줘:\n\n{}	3.7172	1
+ky	Бул кыргызча жаңылыктар текстин улант, эч кандай кириш сөз кошпой; түздөн-түз улант:\n\n{}	4.3754	1
+lt	Parašyk šio lietuviško naujienų teksto tęsinį, be įžangos; tęsk tiesiogiai:\n\n{}	2.83	1
+lv	Uzraksti turpinājumu šim latviešu tekstam, bez ievada; turpini tieši:\n\n{}	2.8674	1
+mr	या मराठी बातमीच्या मजकुराचे पुढे चालू ठेव, कोणत्याही प्रस्तावनेशिवाय, थेट चालू ठेव:\n\n{}	5.2833	1
+nl	Schrijf het vervolg van deze Nederlandse nieuwstekst, zonder inleiding, ga direct door:\n\n{}	1.7281	1
+pl	Napisz dalszy ciąg tego polskiego tekstu informacyjnego, bez wstępu; kontynuuj bezpośrednio:\n\n{}	2.225	1
+pt	Escreva a continuação desta notícia em português, sem preâmbulos; continue diretamente:\n\n{}	1.4357	1
+ro	Scrie o continuare a acestui text de știri în limba română, fără preambul, continuă direct:\n\n{}	1.8718	1
+ru	Напиши продолжение этого новостного текста на русском языке, без предисловия; продолжай сразу:\n\n{}	2.8533	1
+sr	Напиши наставак овог новинског текста на српском језику, без увода; настави директно:\n\n{}	2.3427	1
+ta	இந்த தமிழ் செய்தி உரையின் தொடர்ச்சியை எழுதவும், முன்னுரை இல்லாமல், நேரடியாகத் தொடரவும்:\n\n{}	9.3308	1
+tr	Bu Türkçe haber metninin devamını yaz, giriş yapmadan; doğrudan devam et:\n\n{}	2.5709	1
+uk	Напиши продовження цього тексту новин українською мовою, без передмови; продовжуй безпосередньо:\n\n{}	3.4674	1
+zh	提供这篇中文新闻文本的续写，无需开场白，直接继续：\n\n{}	1.8934	1
+
