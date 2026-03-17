@@ -27,6 +27,8 @@ python3 -m http.server
 # Open http://localhost:8000/
 ```
 
+You can also browse overused items directly in the extracted raw `.csv` files under `/lexa-index/csv_files/news/las-gpt4.1-mini/policy=quantile_trim=no_M=1_K=12_jitter=no/`.
+
 ## Pipeline Overview
 
 The full pipeline consists of 11 stages, each driven by one or more scripts:
