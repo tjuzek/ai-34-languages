@@ -1,0 +1,22 @@
+[
+  {
+    "type": "tip",
+    "title": "Beta Data Coverage",
+    "text": "This explorer is currently in <strong>Beta</strong> with limited coverage. The 'Science' register is restricted to English and select models. Select GPT-4, to access multilingual data in the News register."
+  },
+  {
+    "type": "about",
+    "title": "Methodology: Volume",
+    "text": "<strong>Volume</strong> is based on the Lexical Alignment Score (LAS), which is derived from windowed document prevalence analysis. It offers a fully automated metric for divergence, eliminating the need for manual curation. Details in the <a href='#about' class='underline'>About section</a>."
+  },
+  {
+    "type": "about",
+    "title": "Methodology: Spiking",
+    "text": "<strong>Spiking</strong> is based on the Log Prevalence Ratio (LPR). It measures the <em>magnitude</em> of overuse and identifies 'spiking hallmark' words of AI."
+  },
+  {
+    "type": "tip",
+    "title": "Deep Dive",
+    "text": "Toggle the <strong>Table View</strong> to inspect the specific Part-of-Speech (POS) tags for every divergent word found in the dataset. OPM is occurrences per million (tokens)."
+  }
+]

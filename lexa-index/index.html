@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexA-Index | AI vs. Human Lexical Overuse Explorer</title>
+    
+    <meta name="description" content="Explore which words AI uses too much. Compare AI writing vs. human writing to find 'ghost words' and AI buzzwords.">
+    <meta name="keywords" content="LLM, Lexical Alignment, AI detection, AI misalignment, NLP, Computational Linguistics, AI word usage, Ghost Words, AI buzzwords, AI fluff, AI slop, AI slop, Robo Talk, Algospeak, Modelese, Large Language Models">
+    <meta name="author" content="ANON">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="canonical" href="https://www.example.com/">
+
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="LexA-Index">
+    <meta property="og:title" content="AI Language Explorer | Lexical Alignment for LLMs">
+    <meta property="og:description" content="Explore words overused by AI vs human baselines across languages, registers, and architectures.">
+    <meta property="og:url" content="https://www.example.com/">
+    <meta property="og:image" content="https://www.example.com/social-preview.png">
+    <meta property="og:image:alt" content="LexA-Index Dashboard Preview">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Language Explorer | Lexical Alignment for LLMs">
+    <meta name="twitter:description" content="Explore words overused by AI vs human baselines. A visual tool for NLP researchers.">
+    <meta name="twitter:image" content="https://www.example.com/social-preview.png">
+    
+    <link rel="icon" href="/favicon.ico" sizes="any">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "LexA-Index",
+      "url": "https://www.example.com/",
+      "description": "A tool for exploring words overused by AI compared to human baselines across languages, registers, and architectures.",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web Browser",
+      "author": {
+        "@type": "Organization",
+        "name": "ANON"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { 
+                extend: { 
+                    colors: { brand: '#1e3a8a', brandLight: '#3b82f6', paper: '#f8fafc' },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Merriweather', 'serif'] }
+                } 
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        [x-cloak] { display: none !important; }
+        body { font-family: 'Inter', sans-serif; }
+        .academic-text { font-family: 'Merriweather', serif; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        option.has-switch { color: #64748b; font-style: italic; }
+    </style>
+</head>
+<body class="bg-paper text-slate-800 flex flex-col min-h-screen" x-data="app()" x-init="initApp()">
+
+    <div class="fixed top-4 right-4 z-[9999] max-w-sm w-[min(92vw,24rem)]" x-cloak>
+        <div
+            x-show="toast.show"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 translate-y-[-6px]"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-[-6px]"
+            class="bg-white border border-slate-200 shadow-lg rounded-xl p-4"
+            role="status"
+            aria-live="polite"
+        >
+            <div class="flex items-start gap-3">
+                <div class="mt-0.5">
+                    <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"/>
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <div class="text-sm font-semibold text-slate-900" x-text="toast.title"></div>
+                    <div class="text-sm text-slate-600 mt-0.5" x-text="toast.message"></div>
+                    <div class="text-xs text-slate-400 mt-2" x-show="toast.hint" x-text="toast.hint"></div>
+                </div>
+                <button
+                    class="p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition"
+                    @click="hideToast()"
+                    aria-label="Dismiss notification"
+                >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm" aria-label="Main Navigation">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <a href="#" class="text-xl font-bold tracking-tight text-slate-900" aria-label="LexA-Index Home">LexA-Index</a>
+                <span class="hidden sm:inline-block px-2 py-0.5 text-[10px] uppercase font-semibold bg-brand/10 text-brand rounded-full tracking-wide">Beta</span>
+            </div>
+            <div class="flex items-center space-x-6 text-sm font-medium text-slate-600">
+                <a href="#" class="hover:text-brand transition" aria-current="page">Explorer</a>
+                <a href="about.html" class="hover:text-brand transition">About</a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-slate-900 transition">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-gradient-to-b from-slate-900 to-slate-800 text-white pt-16 pb-12 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight">AI Word Overuse Explorer</h1>
+            <div class="prose prose-lg prose-invert mx-auto opacity-90 academic-text leading-relaxed max-w-2xl">
+                <p>AI has its own language style, encountered by millions of people every day. It may influence how we use language. Our research identifies words AI overuses and the mechanisms behind them. Use this site to explore AI word overuse.</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-6xl mx-auto px-4 -mt-8 w-full z-10 mb-12">
+        <div class="bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden">
+            
+            <div class="bg-slate-50 border-b border-slate-200 p-8">
+                <div class="text-center">
+                    <div class="inline-block text-lg md:text-2xl text-slate-600 leading-loose">
+                        Show me the words that
+                        
+                        <div class="relative inline-block mx-1 group align-middle">
+                            <label for="model-select" class="sr-only">Select AI Model</label>
+
+                            <template x-if="ready">
+                                <div class="relative inline-block">
+                                    <select id="model-select"
+                                            x-model="selection.model"
+                                            @change="onModelChange()"
+                                            class="appearance-none font-bold text-brand bg-transparent border-b-2 border-brand/20 py-1 pr-6 pl-1 focus:outline-none focus:border-brand cursor-pointer hover:bg-white transition rounded-t">
+                                        <template x-for="m in allModels" :key="m">
+                                            <option :value="m" x-text="formatModel(m)"></option>
+                                        </template>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center text-brand">
+                                        <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20" aria-hidden="true">
+                                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template x-if="!ready">
+                                <span class="inline-block h-8 w-40 bg-slate-200/70 rounded-md"></span>
+                            </template>
+                        </div>
+
+                        overuses in
+
+                        <div class="relative inline-block mx-1 align-middle">
+                            <label for="register-select" class="sr-only">Select Register</label>
+
+                            <template x-if="ready">
+                                <div class="relative inline-block">
+                                    <select id="register-select"
+                                            x-model="selection.register"
+                                            @click="maybeToastLimited('register')"
+                                            @focus="maybeToastLimited('register')"
+                                            @change="onRegisterChange()"
+                                            class="appearance-none font-bold text-brand bg-transparent border-b-2 border-brand/20 py-1 pr-6 pl-1 focus:outline-none focus:border-brand cursor-pointer hover:bg-white transition rounded-t">
+                                        <template x-for="r in allRegistersForModel" :key="r">
+                                            <option :value="r" 
+                                                    :class="getRegisterAvailability(r).available ? '' : 'has-switch'"
+                                                    x-text="getRegisterLabel(r)">
+                                            </option>
+                                        </template>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center text-brand">
+                                        <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20" aria-hidden="true">
+                                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template x-if="!ready">
+                                <span class="inline-block h-8 w-32 bg-slate-200/70 rounded-md"></span>
+                            </template>
+                        </div>
+
+                        texts in
+
+                        <div class="relative inline-block mx-1 align-middle">
+                            <label for="lang-select" class="sr-only">Select Language</label>
+
+                            <template x-if="ready">
+                                <div class="relative inline-block">
+                                    <select id="lang-select"
+                                            x-model="selection.lang"
+                                            @click="maybeToastLimited('lang')"
+                                            @focus="maybeToastLimited('lang')"
+                                            @change="onLangChange()"
+                                            class="appearance-none font-bold text-brand bg-transparent border-b-2 border-brand/20 py-1 pr-6 pl-1 focus:outline-none focus:border-brand cursor-pointer hover:bg-white transition rounded-t">
+                                        <template x-for="l in allLanguagesForModel" :key="l">
+                                            <option :value="l" 
+                                                    :class="getLangAvailability(l).available ? '' : 'has-switch'"
+                                                    x-text="getLangLabel(l)">
+                                            </option>
+                                        </template>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center text-brand">
+                                        <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20" aria-hidden="true">
+                                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template x-if="!ready">
+                                <span class="inline-block h-8 w-20 bg-slate-200/70 rounded-md"></span>
+                            </template>
+                        </div>
+                        .
+                    </div>
+                </div>
+
+                <div class="mt-6 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8">
+                    
+                    <div class="bg-white p-1 rounded-lg border border-slate-200 shadow-sm flex items-center">
+                        <button 
+                            @click="sortBy = 'las'; insightIndex = 0; $nextTick(() => renderChart())" 
+                            :class="sortBy === 'las' ? 'bg-slate-100 text-slate-900 font-semibold shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'"
+                            class="px-4 py-1.5 rounded-md text-sm transition-all focus:outline-none"
+                            title="Show words with highest overall prevalence (Volume)"
+                        >
+                            Volume
+                        </button>
+                        <button 
+                            @click="sortBy = 'distinctiveness'; insightIndex = 0; $nextTick(() => renderChart())" 
+                            :class="sortBy === 'distinctiveness' ? 'bg-slate-100 text-brand font-semibold shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'"
+                            class="px-4 py-1.5 rounded-md text-sm transition-all focus:outline-none"
+                            title="Show words with highest relative overuse (Log Prevalence Ratio)"
+                        >
+                            Spiking
+                        </button>
+                    </div>
+
+                    <p class="text-sm text-slate-500 font-medium">
+                        <span class="inline-flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-brand/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+                            </svg>
+                            Select <span class="font-bold text-slate-600">GPT-4.1</span> to view many different languages.
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
+                
+                <div class="lg:col-span-8 p-6 relative flex flex-col border-b lg:border-b-0 lg:border-r border-slate-200">
+                    
+                    <!-- UPDATED: better desktop spacing + right-aligned wrapping controls -->
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center mb-6 gap-4">
+                        <div class="flex-1 min-w-0">
+                            <h2 class="font-semibold text-slate-800" x-text="sortBy === 'distinctiveness' ? 'Spiking Words' : 'High Volume Words'">Top Overused Words</h2>
+                            <p class="text-[11px] text-slate-500 font-medium mt-1">
+                                (<span x-text="formatK(meta.total_tokens)"></span> AI tokens vs 
+                                <span x-text="formatK(meta.total_tokens)"></span> human tokens across 
+                                <span x-text="formatK(meta.n_pairs)"></span> document pairs)
+                            </p>
+                            <!-- NOTE REMOVED: workingSetInfo display -->
+                        </div>
+
+                        <div class="flex flex-wrap gap-3 items-center sm:justify-end ml-auto">
+                            <div class="flex bg-slate-100 p-1 rounded-lg" role="group" aria-label="Word Filter">
+                                <button @click="setFilter('all')" :class="filterMode === 'all' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'" class="px-3 py-1 rounded-md text-xs font-medium transition">All</button>
+                                <button @click="setFilter('content')" :class="filterMode === 'content' ? 'bg-white text-brand shadow-sm' : 'text-slate-500 hover:text-slate-700'" class="px-3 py-1 rounded-md text-xs font-medium transition">Content</button>
+                                <button @click="setFilter('function')" :class="filterMode === 'function' ? 'bg-white text-purple-700 shadow-sm' : 'text-slate-500 hover:text-slate-700'" class="px-3 py-1 rounded-md text-xs font-medium transition">Func</button>
+                            </div>
+
+                            <div class="flex bg-slate-100 p-1 rounded-lg" role="group" aria-label="View Toggle">
+                                <button
+                                    @click="view = 'chart'; $nextTick(() => renderChart())"
+                                    :class="view === 'chart' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'"
+                                    class="px-3 py-1 rounded-md text-xs font-medium transition"
+                                    aria-label="Show Chart View"
+                                >Chart</button>
+                                <button
+                                    @click="view = 'table'"
+                                    :class="view === 'table' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'"
+                                    class="px-3 py-1 rounded-md text-xs font-medium transition"
+                                    aria-label="Show Table View"
+                                >Table</button>
+                            </div>
+
+                            <!-- Search -->
+                            <div class="relative">
+                                <label for="word-search" class="sr-only">Search word</label>
+                                <input
+                                    id="word-search"
+                                    type="text"
+                                    x-model.trim="query"
+                                    @input.debounce.150ms="$nextTick(() => renderChart())"
+                                    placeholder="Search word…"
+                                    class="w-40 sm:w-48 bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand/30"
+                                />
+                                <button
+                                    x-show="query.length"
+                                    @click="query=''; $nextTick(() => renderChart())"
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"
+                                    aria-label="Clear search"
+                                >
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <!-- Rows selector removed: tableLimit is fixed at 300 -->
+                        </div>
+                    </div>
+                    
+                    <div x-show="loading" class="absolute inset-0 bg-white/90 z-20 flex items-center justify-center backdrop-blur-[1px]">
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-brand" role="status"></div>
+                            <span class="text-sm font-medium text-slate-500">Processing Lexical Data...</span>
+                        </div>
+                    </div>
+
+                    <div class="flex-grow relative min-h-[400px]">
+                        <div x-show="view === 'chart'" class="h-full w-full absolute inset-0">
+                            <canvas id="mainChart" aria-label="Bar chart showing the most divergent words"></canvas>
+                        </div>
+                        
+                        <div x-show="view === 'table'" x-cloak class="h-full w-full absolute inset-0 overflow-y-auto">
+                            <table class="w-full text-sm text-left">
+                                <thead class="text-xs text-slate-500 uppercase bg-slate-50 sticky top-0 border-b border-slate-200 z-10">
+                                    <tr>
+                                        <th scope="col" class="px-4 py-3 bg-slate-50">Rank</th>
+                                        <th scope="col" class="px-4 py-3 bg-slate-50">Word</th>
+                                        <th scope="col" class="px-4 py-3 bg-slate-50">POS</th>
+                                        <th scope="col" class="px-4 py-3 text-right bg-slate-50">
+                                            <span x-text="sortBy === 'distinctiveness' ? 'LPR' : 'LAS'" title="Lexical Alignment Score vs Log Prevalence Ratio"></span>
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-right bg-slate-50">AI OPM</th>
+                                        <th scope="col" class="px-4 py-3 text-right bg-slate-50">Ratio</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <template x-for="row in displayData" :key="(row.word || '') + '_' + (row.upos || '')">
+                                        <tr class="hover:bg-slate-50 transition-colors">
+                                            
+                                            <td class="px-4 py-2.5 text-slate-400 font-mono text-xs font-bold">
+                                                <span x-text="sortBy === 'distinctiveness' ? (row.rank_spiking ?? '-') : (row.rank_volume ?? '-')"></span>
+                                            </td>
+
+                                            <td class="px-4 py-2.5 font-medium text-slate-800" x-text="row.word"></td>
+                                            
+                                            <td class="px-4 py-2.5">
+                                                <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset"
+                                                    :class="['NOUN','VERB','ADJ','ADV'].includes(row.upos) ? 'bg-blue-50 text-blue-700 ring-blue-700/10' : 'bg-slate-50 text-slate-600 ring-slate-500/10'" 
+                                                    x-text="row.upos || '-'">
+                                                </span>
+                                            </td>
+                                            
+                                            <td class="px-4 py-2.5 text-right font-mono text-slate-600 font-medium" 
+                                                x-text="sortBy === 'distinctiveness' ? ((row.distinctiveness ?? null) !== null ? row.distinctiveness.toFixed(4) : '-') : ((row.score ?? null) !== null ? row.score.toFixed(4) : '-')"></td>
+
+                                            <td class="px-4 py-2.5 text-right text-slate-500 text-xs" x-text="row.ai_freq"></td>
+                                            
+                                            <!-- Ratio is always present with smoothing; still guard just in case -->
+                                            <td class="px-4 py-2.5 text-right">
+                                                <template x-if="(row.ratio ?? null) !== null">
+                                                    <span class="font-bold text-brand" x-text="row.ratio + 'x'"></span>
+                                                </template>
+                                                <template x-if="(row.ratio ?? null) === null">
+                                                    <span class="text-slate-400">-</span>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-4 bg-slate-50/50 p-6 flex flex-col gap-6">
+                    
+                    <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm flex flex-col flex-grow min-h-[360px] relative overflow-hidden" 
+                         x-show="generatedInsights.length > 0"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 transform scale-95"
+                         x-transition:enter-end="opacity-100 transform scale-100">
+                        
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest" x-text="generatedInsights[insightIndex]?.title"></h3>
+                            
+                            <div class="flex gap-1" x-show="generatedInsights.length > 1">
+                                <button @click="prevInsight" aria-label="Previous Insight" class="p-1.5 hover:bg-slate-100 rounded text-slate-400 hover:text-slate-700 transition">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                                </button>
+                                <button @click="nextInsight" aria-label="Next Insight" class="p-1.5 hover:bg-slate-100 rounded text-slate-400 hover:text-slate-700 transition">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow flex flex-col justify-center animate-fade">
+                            
+                            <template x-if="generatedInsights[insightIndex]?.type === 'summary'">
+                                <div>
+                                    <div class="mb-6">
+                                        <div class="flex items-baseline gap-2 mb-1">
+                                            <span class="text-4xl font-bold text-slate-900 tracking-tight" x-text="'“' + generatedInsights[insightIndex].main.word + '”'"></span>
+                                        </div>
+                                        <p class="text-sm text-slate-500">
+                                            is the #1 most <span x-text="sortBy === 'distinctiveness' ? 'spiking' : 'overused'"></span> word overall.
+                                        </p>
+                                    </div>
+
+                                    <div class="h-px bg-slate-100 w-full mb-6"></div>
+
+                                    <div class="space-y-4">
+                                        <template x-for="cat in generatedInsights[insightIndex].leaders" :key="cat.pos">
+                                            <div class="flex items-baseline justify-between group">
+                                                <span class="text-xs font-bold text-slate-400 uppercase tracking-wide w-16" x-text="cat.pos"></span>
+                                                <div class="flex-grow text-right">
+                                                    <span class="text-base font-semibold text-slate-700 group-hover:text-brand transition-colors" x-text="cat.word"></span>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template x-if="generatedInsights[insightIndex]?.type !== 'summary'">
+                                <div>
+                                    <div class="text-base text-slate-600 leading-relaxed" x-html="generatedInsights[insightIndex]?.text"></div>
+                                </div>
+                            </template>
+
+                        </div>
+
+                        <div class="flex justify-center gap-2 mt-6" x-show="generatedInsights.length > 1">
+                            <template x-for="(insight, idx) in generatedInsights" :key="idx">
+                                <button @click="insightIndex = idx" :aria-label="'Go to insight ' + (idx + 1)" class="w-2 h-2 rounded-full transition-colors duration-300" :class="idx === insightIndex ? 'bg-brand' : 'bg-slate-200 hover:bg-slate-300'"></button>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center pt-0">
+                        <button 
+                            @click="downloadZip()"
+                            class="w-full bg-slate-800 hover:bg-slate-700 text-white font-medium py-4 px-4 rounded-lg shadow-sm transition flex items-center justify-center gap-2 group">
+                            <svg class="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            Download CSV files (.7z)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-8 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+            <div>&copy; ANON.</div>
+            <div>Last updated: <span class="font-mono text-slate-700">2026-01-18</span></div>
+        </div>
+    </footer>
+
+    <script>
+        function app() {
+            return {
+                // --- Performance / relevance knobs ---
+                // Working set = union of top-by-volume + top-by-spiking + pinned words.
+                WORKSET_TOP_VOLUME: 500,
+                WORKSET_TOP_SPIKING: 1000,
+                PINNED_WORDS: ['delve'], // add more if you like
+
+                ready: false,
+                view: 'chart',
+                filterMode: 'all',
+                sortBy: 'las', // 'las' (Volume) or 'distinctiveness' (Spiking/LPR)
+                loading: false,
+                chartInstance: null,
+                inventory: [],
+                data: [],
+                meta: {},
+
+                // UI state
+                query: '',
+                tableLimit: 300, // fixed at 300
+
+                globalInsights: [],
+                insightIndex: 0,
+
+                toast: {
+                    show: false,
+                    title: '',
+                    message: '',
+                    hint: '',
+                    _timer: null
+                },
+                
+                selection: { model: 'gpt-5.2', register: 'science', lang: 'en' },
+
+                // --- Helpers for rank-based sorting (fast) ---
+                get sortKey() {
+                    return this.sortBy === 'distinctiveness' ? 'rank_spiking' : 'rank_volume';
+                },
+
+                rankValue(row) {
+                    const v = row?.[this.sortKey];
+                    return (typeof v === 'number' && isFinite(v)) ? v : 1e18;
+                },
+
+                get rankedForInsights() {
+                    if (!this.data.length) return [];
+                    const arr = [...this.data];
+                    arr.sort((a, b) => this.rankValue(a) - this.rankValue(b));
+                    return arr;
+                },
+
+                get generatedInsights() {
+                    if (!this.data.length && this.globalInsights.length) return this.globalInsights;
+                    if (!this.data.length) return [];
+
+                    const sortedSource = this.rankedForInsights;
+                    const cards = [];
+                    const top = sortedSource[0];
+                    if (!top) return this.globalInsights || [];
+
+                    const topSlice = sortedSource.slice(0, 250);
+                    const verb = topSlice.find(d => d.upos === 'VERB');
+                    const noun = topSlice.find(d => d.upos === 'NOUN');
+                    const adj  = topSlice.find(d => d.upos === 'ADJ');
+
+                    cards.push({
+                        type: 'summary',
+                        title: this.sortBy === 'distinctiveness' ? 'Spiking (LPR)' : 'Highest Volume (LAS)',
+                        main: top,
+                        leaders: [
+                            { pos: 'VERB', word: verb ? verb.word : '-' },
+                            { pos: 'NOUN', word: noun ? noun.word : '-' },
+                            { pos: 'ADJ',  word: adj  ? adj.word  : '-' }
+                        ]
+                    });
+
+                    if (this.globalInsights.length) cards.push(...this.globalInsights);
+                    return cards;
+                },
+
+                get allModels() {
+                    if (!this.inventory.length) return [];
+                    return [...new Set(this.inventory.map(i => i.model))].sort();
+                },
+
+                get allRegistersForModel() {
+                    if (!this.inventory.length) return [];
+                    return [...new Set(this.inventory
+                        .filter(i => i.model === this.selection.model)
+                        .map(i => i.register)
+                    )].sort();
+                },
+
+                get allLanguagesForModel() {
+                    if (!this.inventory.length) return [];
+                    return [...new Set(this.inventory
+                        .filter(i => i.model === this.selection.model)
+                        .map(i => i.lang)
+                    )].sort();
+                },
+
+                get modelRegisterCount() { return this.allRegistersForModel.length; },
+                get modelLanguageCount() { return this.allLanguagesForModel.length; },
+
+                get displayData() {
+                    if (!this.data.length) return [];
+
+                    let result = [...this.data];
+
+                    // POS filtering
+                    const contentTags = ['NOUN', 'VERB', 'ADJ', 'ADV', 'PROPN'];
+                    if (this.filterMode === 'content') result = result.filter(d => d.upos && contentTags.includes(d.upos));
+                    else if (this.filterMode === 'function') result = result.filter(d => d.upos && !contentTags.includes(d.upos));
+
+                    // Search filtering
+                    const q = (this.query || '').trim().toLowerCase();
+                    if (q) result = result.filter(d => (d.word || '').toLowerCase().includes(q));
+
+                    // Rank-based ordering (fast)
+                    result.sort((a, b) => this.rankValue(a) - this.rankValue(b));
+
+                    // Fixed limit (300)
+                    return result.slice(0, this.tableLimit);
+                },
+
+                async initApp() {
+                    try {
+                        this.ready = false;
+
+                        if (!this._pageshowBound) {
+                            this._pageshowBound = true;
+                            window.addEventListener('pageshow', (e) => {
+                                if (e.persisted) this.initApp();
+                            });
+                        }
+
+                        const res = await fetch('data/index.json');
+                        if (!res.ok) throw new Error(`Could not load data/index.json`);
+                        this.inventory = await res.json();
+
+                        try {
+                            const resInsights = await fetch('insights.json');
+                            if (resInsights.ok) this.globalInsights = await resInsights.json();
+                        } catch (e) { console.warn("Insights file optional."); }
+
+                        const params = new URLSearchParams(window.location.search);
+                        const preferred = { ...this.selection };
+
+                        const desired = {
+                            model: params.get('model') || preferred.model,
+                            register: params.get('register') || preferred.register,
+                            lang: params.get('lang') || preferred.lang
+                        };
+
+                        const models = this.allModels;
+                        const preferredOk = models.includes(preferred.model);
+
+                        if (!models.includes(desired.model)) {
+                            desired.model = preferredOk ? preferred.model : (models[0] || desired.model);
+                        }
+
+                        this.selection.model = desired.model;
+                        this.selection.register = desired.register;
+                        this.selection.lang = desired.lang;
+
+                        this.validateSelection();
+
+                        this.ready = true;
+
+                        this.$nextTick(() => {
+                            const ms = document.getElementById('model-select');
+                            const rs = document.getElementById('register-select');
+                            const ls = document.getElementById('lang-select');
+                            if (ms) ms.value = this.selection.model;
+                            if (rs) rs.value = this.selection.register;
+                            if (ls) ls.value = this.selection.lang;
+
+                            this.fetchData();
+                        });
+
+                    } catch (err) {
+                        console.error(err);
+                        alert("Error: Cannot load data! Check data/index.json");
+                    }
+                },
+
+                onModelChange() {
+                    if (this.modelRegisterCount <= 1) this.showToastLimited('domain');
+                    else if (this.modelLanguageCount <= 1) this.showToastLimited('language');
+                    this.validateSelection();
+                    this.fetchData();
+                },
+
+                onRegisterChange() {
+                    if (this.modelRegisterCount <= 1) this.showToastLimited('domain');
+                    this.validateSelection();
+                    this.fetchData();
+                },
+
+                onLangChange() {
+                    if (this.modelLanguageCount <= 1) this.showToastLimited('language');
+                    this.validateSelection();
+                    this.fetchData();
+                },
+
+                setFilter(mode) {
+                    this.filterMode = mode;
+                    this.renderChart();
+                },
+
+                nextInsight() {
+                    this.insightIndex = (this.insightIndex + 1) % this.generatedInsights.length;
+                },
+                prevInsight() {
+                    this.insightIndex = (this.insightIndex - 1 + this.generatedInsights.length) % this.generatedInsights.length;
+                },
+
+                // --- Normalise compact JSON keys into the internal "expanded" shape ---
+                normaliseMeta(meta) {
+                    if (!meta) return {};
+                    // Compact meta keys: np, kw, tt, src, md, min, sm, n0, n1
+                    if (meta.tt !== undefined || meta.np !== undefined) {
+                        return {
+                            n_pairs: meta.np ?? meta.n_pairs ?? 0,
+                            k_window: meta.kw ?? meta.k_window ?? 0,
+                            total_tokens: meta.tt ?? meta.total_tokens ?? 0,
+                            source_path: meta.src ?? meta.source_path ?? '',
+                            mode: meta.md ?? meta.mode ?? '',
+                            min_ai_count_for_spiking: meta.min ?? meta.min_ai_count_for_spiking ?? 0,
+                            ratio_smooth: meta.sm ?? meta.ratio_smooth ?? 0,
+                            n_rows_csv: meta.n0 ?? meta.n_rows_csv ?? 0,
+                            n_rows_written: meta.n1 ?? meta.n_rows_written ?? 0
+                        };
+                    }
+                    return meta;
+                },
+
+                normaliseRows(rows) {
+                    if (!Array.isArray(rows)) return [];
+                    if (!rows.length) return rows;
+
+                    // If it already looks expanded, keep as-is.
+                    const r0 = rows[0];
+                    const isCompact = (r0 && (r0.w !== undefined || r0.las !== undefined || r0.rk_las !== undefined));
+                    if (!isCompact) return rows;
+
+                    // Compact row keys: w,u,las,lpr,a,h,r,rk_las,rk_lpr
+                    return rows.map(r => ({
+                        word: r.w ?? '',
+                        upos: r.u ?? 'UNK',
+                        score: (typeof r.las === 'number') ? r.las : 0,
+                        distinctiveness: (typeof r.lpr === 'number') ? r.lpr : 0,
+                        ai_freq: (typeof r.a === 'number') ? r.a : 0,
+                        human_freq: (typeof r.h === 'number') ? r.h : 0,
+                        ratio: (typeof r.r === 'number') ? r.r : null,
+                        rank_volume: (typeof r.rk_las === 'number') ? r.rk_las : 0,
+                        rank_spiking: (typeof r.rk_lpr === 'number') ? r.rk_lpr : 0
+                    }));
+                },
+
+                // Still keep working set logic internally (fast UI), but no visible note/toast.
+                buildWorkingSet(rawRows) {
+                    const pinned = new Set((this.PINNED_WORDS || []).map(w => String(w).toLowerCase()));
+                    const keep = [];
+
+                    for (const r of rawRows) {
+                        const rv = (typeof r.rank_volume === 'number') ? r.rank_volume : 1e18;
+                        const ri = (typeof r.rank_spiking === 'number') ? r.rank_spiking : 1e18;
+                        const w  = String(r.word || '').toLowerCase();
+
+                        const inVolume = rv <= this.WORKSET_TOP_VOLUME;
+                        const inSpiking = ri <= this.WORKSET_TOP_SPIKING;
+                        const isPinned = pinned.has(w);
+
+                        if (inVolume || inSpiking || isPinned) keep.push(r);
+                    }
+                    return keep;
+                },
+
+                async fetchData() {
+                    if (!this.selection.model || !this.selection.lang || !this.selection.register) return;
+
+                    const exists = this.inventory.some(i => 
+                        i.model === this.selection.model && 
+                        i.register === this.selection.register && 
+                        i.lang === this.selection.lang
+                    );
+                    if (!exists) {
+                        console.warn("Triplet not in inventory:", this.selection);
+                        return;
+                    }
+
+                    this.loading = true;
+                    this.updateURL();
+
+                    const baseFilename = `data/${this.selection.lang}_${this.selection.register}_${this.selection.model}.json`;
+
+                    try {
+                        const res = await fetch(baseFilename);
+                        if (!res.ok) throw new Error(`Missing file: ${baseFilename}`);
+                        const json = await res.json();
+
+                        const raw = (json && json.meta) ? (json.data || []) : (json.data || json || []);
+
+                        // Normalise meta + rows (supports compact JSON + old JSON)
+                        this.meta = this.normaliseMeta(json.meta || {});
+                        const expandedRows = this.normaliseRows(raw);
+
+                        this.insightIndex = 0;
+
+                        // Build a relevance-preserving working set (silent)
+                        this.data = this.buildWorkingSet(expandedRows);
+
+                        this.$nextTick(() => this.renderChart());
+                    } catch (e) {
+                        console.error(e);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                renderChart() {
+                    if (this.chartInstance) {
+                        this.chartInstance.destroy();
+                        this.chartInstance = null;
+                    }
+
+                    if (this.view !== 'chart') return;
+
+                    const canvas = document.getElementById('mainChart');
+                    if (!canvas) return;
+
+                    const ctx = canvas.getContext('2d');
+
+                    const chartData = this.displayData.slice(0, 15);
+                    if (chartData.length === 0) return;
+
+                    const isDist = this.sortBy === 'distinctiveness';
+                    const metricKey = isDist ? 'distinctiveness' : 'score';
+                    const labelText = isDist ? 'Spiking Score' : 'Volume Score';
+                    const axisText = isDist ? 'Spiking Score (LPR)' : 'Volume Score (LAS)';
+                    
+                    const barColor = '#1e3a8a'; 
+
+                    this.chartInstance = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: chartData.map(d => d.word),
+                            datasets: [{
+                                label: labelText,
+                                data: chartData.map(d => (d[metricKey] ?? d.score) ?? 0),
+                                backgroundColor: barColor,
+                                borderRadius: 4,
+                                barThickness: 'flex',
+                                maxBarThickness: 30
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            indexAxis: 'y',
+                            animation: false,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                y: { grid: { display: false } },
+                                x: { 
+                                    grid: { color: '#f1f5f9' }, 
+                                    title: { 
+                                        display: true, 
+                                        text: axisText
+                                    } 
+                                }
+                            }
+                        }
+                    });
+                },
+
+                updateURL() {
+                    const url = new URL(window.location);
+                    url.searchParams.set('lang', this.selection.lang);
+                    url.searchParams.set('register', this.selection.register);
+                    url.searchParams.set('model', this.selection.model);
+                    window.history.pushState({}, '', url);
+                },
+
+                validateSelection() {
+                    const models = this.allModels;
+                    if (!models.length) return;
+                    if (!models.includes(this.selection.model)) this.selection.model = models[0];
+
+                    const regs = this.allRegistersForModel;
+                    if (!regs.length) return;
+                    if (!regs.includes(this.selection.register)) this.selection.register = regs[0];
+
+                    const langs = this.allLanguagesForModel;
+                    if (!langs.length) return;
+                    if (!langs.includes(this.selection.lang)) this.selection.lang = langs[0];
+
+                    const ok = this.inventory.some(i => 
+                        i.model === this.selection.model && 
+                        i.register === this.selection.register && 
+                        i.lang === this.selection.lang
+                    );
+
+                    if (!ok) {
+                        const first = this.inventory.find(i => i.model === this.selection.model);
+                        if (first) {
+                            this.selection.register = first.register;
+                            this.selection.lang = first.lang;
+                        }
+                    }
+                },
+
+                showToastLimited(type) {
+                    const isLang = type === 'language';
+                    const items = isLang ? this.allLanguagesForModel : this.allRegistersForModel;
+                    const currentItem = items[0] ? (isLang ? items[0].toUpperCase() : this.capitalize(items[0])) : '—';
+                    
+                    this.showToast({
+                        title: isLang ? 'Limited language options' : 'Limited domain options',
+                        message: `${this.formatModel(this.selection.model)} currently has only ${currentItem}.`,
+                        hint: `Switch model for more ${type} choices.`,
+                        ttl: 3200
+                    });
+                },
+
+                maybeToastLimited(which) {
+                    if (!this.inventory.length) return;
+                    if (which === 'register' && this.modelRegisterCount <= 1) this.showToastLimited('domain');
+                    if (which === 'lang' && this.modelLanguageCount <= 1) this.showToastLimited('language');
+                },
+
+                getRegisterAvailability(reg) {
+                    const valid = this.inventory.some(i => i.model === this.selection.model && i.register === reg && i.lang === this.selection.lang);
+                    if (valid) return { available: true, switchTarget: null };
+                    const fallback = this.inventory.find(i => i.model === this.selection.model && i.register === reg);
+                    return { available: false, switchTarget: fallback ? fallback.lang : null };
+                },
+
+                getLangAvailability(lng) {
+                    const valid = this.inventory.some(i => i.model === this.selection.model && i.register === this.selection.register && i.lang === lng);
+                    if (valid) return { available: true, switchTarget: null };
+                    const fallback = this.inventory.find(i => i.model === this.selection.model && i.lang === lng);
+                    return { available: false, switchTarget: fallback ? fallback.register : null };
+                },
+
+                getRegisterLabel(reg) {
+                    const status = this.getRegisterAvailability(reg);
+                    const label = this.capitalize(reg);
+                    if (status.available) return label;
+                    if (status.switchTarget) return `${label} \u27F6 switches to ${status.switchTarget.toUpperCase()}`;
+                    return label;
+                },
+
+                getLangLabel(lng) {
+                    const status = this.getLangAvailability(lng);
+                    const label = lng.toUpperCase();
+                    if (status.available) return label;
+                    if (status.switchTarget) return `${label} \u27F6 switches to ${this.capitalize(status.switchTarget)}`;
+                    return label;
+                },
+
+                showToast({ title, message, hint = '', ttl = 3800 }) {
+                    if (this.toast._timer) clearTimeout(this.toast._timer);
+                    this.toast.title = title;
+                    this.toast.message = message;
+                    this.toast.hint = hint;
+                    this.toast.show = true;
+                    this.toast._timer = setTimeout(() => {
+                        this.toast.show = false;
+                        this.toast._timer = null;
+                    }, ttl);
+                },
+
+                hideToast() {
+                    if (this.toast._timer) clearTimeout(this.toast._timer);
+                    this.toast._timer = null;
+                    this.toast.show = false;
+                },
+
+                downloadZip() {
+                    const url = new URL('csv_files.7z', window.location.href);
+                    const a = document.createElement('a');
+                    a.href = url.toString();
+                    a.download = 'csv_files.7z';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    this.showToast({
+                        title: 'Download started',
+                        message: 'Downloading csv_files.7z',
+                        hint: 'If nothing happens, ensure csv_files.7z is deployed next to index.html.'
+                    });
+                },
+
+                formatK(num) {
+                    if (!num) return '-';
+                    if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+                    if (num >= 1000) return (num / 1000).toFixed(0) + 'k';
+                    return num;
+                },
+
+                capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; },
+                formatModel(s) { return s ? s.toUpperCase() : ''; }
+            }
+        }
+    </script>
+</body>
+</html>
