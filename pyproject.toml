@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aiwl"
+version = "0.1.0"
+description = "AIWL: AI & the World's Languages – tools for cross-linguistic analysis of AI-associated language."
+authors = [
+    { name = "AIWL Project Team" }
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "stanza>=1.8.0",
+    "tiktoken>=0.8.0",
+    "openai>=1.0.0",
+    "google-genai>=1.0.0",
+    "anthropic>=0.37.0",
+    "pandas>=2.0.0",
+    "scipy>=1.10.0",
+    "matplotlib>=3.7.0",
+    "numpy>=1.24.0",
+    "sentence-transformers>=2.2.0",
+    "tqdm>=4.60.0",
+    "requests>=2.28.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "isort",
+    "flake8",
+    "mypy",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
