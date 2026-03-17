@@ -6,6 +6,27 @@ This repository accompanies the paper: *AI-Associated Lexical Shifts Across 34 L
 
 This project quantifies how large language models (LLMs) influence lexical usage across the world's languages. Using a split-halves continuation design on WMT News Crawl data (2012--2024), we compute Log Prevalence Ratio (LPR) metrics to identify words systematically overused by AI relative to human baselines, then track those words diachronically and cross-linguistically.
 
+## Interactive Explorer
+
+The `lexa-index/` directory contains an interactive web tool for exploring AI-overused words across languages.
+
+To run locally:
+
+```bash
+cd lexa-index
+
+# Unpack the data
+7z x csv_files.7z.001
+
+# Build JSON files from CSVs
+python3 build_data.py
+
+# Serve locally
+python3 -m http.server
+
+# Open http://localhost:8000/
+```
+
 ## Pipeline Overview
 
 The full pipeline consists of 11 stages, each driven by one or more scripts:
@@ -221,27 +242,6 @@ python figures/fig_diachronic.py
 ```
 
 Output: PDF and PNG files in `figures/`.
-
-## Interactive Explorer (LexA-Index)
-
-The `lexa-index/` directory contains an interactive web tool for exploring AI-overused words across languages.
-
-To run locally:
-
-```bash
-cd lexa-index
-
-# Unpack the data
-7z x csv_files.7z
-
-# Build JSON files from CSVs
-python3 build_data.py
-
-# Serve locally
-python3 -m http.server
-
-# Open http://localhost:8000/
-```
 
 ## Technical Notes
 
