@@ -1,6 +1,6 @@
 # AI-Associated Lexical Shifts Across 34 Languages
 
-This repository accompanies the paper: *AI-Associated Lexical Shifts Across 34 Languages*.
+This repository accompanies the paper *AI-Associated Lexical Shifts Across 34 Languages* — [arXiv:2605.25358](https://arxiv.org/abs/2605.25358). Live explorer: [aiwordexplorer.com](https://www.aiwordexplorer.com/).
 
 ## Overview
 
@@ -8,7 +8,7 @@ This project quantifies how large language models (LLMs) influence lexical usage
 
 ## Interactive Explorer
 
-The `lexa-index/` directory contains an interactive web tool for exploring AI-overused words across languages.
+The `lexa-index/` directory contains an interactive web tool for exploring AI-overused words across languages. A hosted version is live at [aiwordexplorer.com](https://www.aiwordexplorer.com/).
 
 To run locally:
 
@@ -258,4 +258,23 @@ The code in this repository was developed with AI assistance from GPT (OpenAI), 
 
 ## Citation
 
-Citation details will be added upon publication.
+A citation is appreciated but not required (see License). If you use this work, please cite:
+
+```bibtex
+@misc{juzek2026lexical,
+  title         = {AI-Associated Lexical Shifts Across 34 Languages: Cross-Lingual Convergence and Diachronic Uptake in News Writing},
+  author        = {Juzek, Thomas Stephan},
+  year          = {2026},
+  eprint        = {2605.25358},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2605.25358}
+}
+```
+
+## License
+
+Take this and run — no rights reserved beyond the disclaimers in the licence files.
+
+- **Code** — [MIT No Attribution (MIT-0)](LICENSE): use, modify, and distribute freely, no attribution required, no warranty.
+- **Data / word lists** — [CC0 1.0](LICENSE-DATA): dedicated to the public domain.
