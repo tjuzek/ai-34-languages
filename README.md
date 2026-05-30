@@ -252,9 +252,11 @@ Output: PDF and PNG files in `figures/`.
 - **`fig_marketshare.py`** resolves paths relative to the repository root via `__file__`.
 - **`fig_crosslingual_alignment.py`** has hardcoded data (no file reads needed).
 
-## AI Assistance Disclosure
+## AI Assistance
 
 The code in this repository was developed with AI assistance from GPT (OpenAI), Gemini (Google), and Claude (Anthropic). All AI-generated code was reviewed, tested, and validated by the authors.
+
+Repository polished with Claude Code.
 
 ## Citation
 
