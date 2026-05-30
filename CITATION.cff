@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this work, a citation is appreciated (though not required; see the licence)."
+title: "ai-34-languages: code, word lists, and the LexA-Index explorer"
+type: software
+authors:
+  - family-names: "Juzek"
+    given-names: "Thomas Stephan"
+    orcid: "https://orcid.org/0000-0002-3204-3879"
+repository-code: "https://github.com/tjuzek/ai-34-languages"
+preferred-citation:
+  type: article
+  title: "AI-Associated Lexical Shifts Across 34 Languages: Cross-Lingual Convergence and Diachronic Uptake in News Writing"
+  authors:
+    - family-names: "Juzek"
+      given-names: "Thomas Stephan"
+      orcid: "https://orcid.org/0000-0002-3204-3879"
+  year: 2026
+  journal: "arXiv preprint arXiv:2605.25358"
+  doi: "10.48550/arXiv.2605.25358"
+  url: "https://arxiv.org/abs/2605.25358"
