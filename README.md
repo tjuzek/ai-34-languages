@@ -273,9 +273,9 @@ If you use this code or data, a citation is appreciated (though not required; se
 }
 ```
 
-## License
+## Licence
 
-Take this and run — no rights reserved beyond the disclaimers in the licence files.
+- **Code:** MIT No Attribution (MIT-0). See [`LICENSE`](LICENSE). Use it freely, no attribution required.
+- **Data and word lists:** CC0 1.0 Universal (public domain dedication). See [`LICENSE-DATA`](LICENSE-DATA).
 
-- **Code** — [MIT No Attribution (MIT-0)](LICENSE): use, modify, and distribute freely, no attribution required, no warranty.
-- **Data / word lists** — [CC0 1.0](LICENSE-DATA): dedicated to the public domain.
+A citation is not required but is appreciated; see the Citation section.
