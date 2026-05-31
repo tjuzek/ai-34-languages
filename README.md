@@ -1,6 +1,6 @@
 # AI-Associated Lexical Shifts Across 34 Languages
 
-This repository accompanies the paper *AI-Associated Lexical Shifts Across 34 Languages* — [arXiv:2605.25358](https://arxiv.org/abs/2605.25358). Live explorer: [aiwordexplorer.com](https://www.aiwordexplorer.com/).
+This repository accompanies the paper *AI-Associated Lexical Shifts Across 34 Languages* ([arXiv:2605.25358](https://arxiv.org/abs/2605.25358); the PDF is included here as [`AI-Associated-Lexical-Shifts-34-Languages.pdf`](AI-Associated-Lexical-Shifts-34-Languages.pdf)). Live explorer: [aiwordexplorer.com](https://www.aiwordexplorer.com/).
 
 ## Overview
 
