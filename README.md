@@ -279,3 +279,5 @@ If you use this code or data, a citation is appreciated (though not required; se
 - **Data and word lists:** CC0 1.0 Universal (public domain dedication). See [`LICENSE-DATA`](LICENSE-DATA).
 
 A citation is not required but is appreciated; see the Citation section.
+
+The included paper PDF remains under its own terms (the arXiv preprint, the authors' own), separate from the code and data licences above.
