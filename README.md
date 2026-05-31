@@ -6,6 +6,21 @@ This repository accompanies the paper *AI-Associated Lexical Shifts Across 34 La
 
 This project quantifies how large language models (LLMs) influence lexical usage across the world's languages. Using a split-halves continuation design on WMT News Crawl data (2012--2024), we compute Log Prevalence Ratio (LPR) metrics to identify words systematically overused by AI relative to human baselines, then track those words diachronically and cross-linguistically.
 
+## Citation
+
+If you use this code or data, a citation is appreciated (though not required; see the licence).
+
+```bibtex
+@article{juzek-2026-ai-34-languages,
+  title   = {AI-Associated Lexical Shifts Across 34 Languages: Cross-Lingual Convergence and Diachronic Uptake in News Writing},
+  author  = {Juzek, Thomas Stephan},
+  journal = {arXiv preprint arXiv:2605.25358},
+  year    = {2026},
+  doi     = {10.48550/arXiv.2605.25358},
+  url     = {https://arxiv.org/abs/2605.25358}
+}
+```
+
 ## Interactive Explorer
 
 The `lexa-index/` directory contains an interactive web tool for exploring AI-overused words across languages. A hosted version is live at [aiwordexplorer.com](https://www.aiwordexplorer.com/).
@@ -252,27 +267,6 @@ Output: PDF and PNG files in `figures/`.
 - **`fig_marketshare.py`** resolves paths relative to the repository root via `__file__`.
 - **`fig_crosslingual_alignment.py`** has hardcoded data (no file reads needed).
 
-## AI Assistance
-
-The code in this repository was developed with AI assistance from GPT (OpenAI), Gemini (Google), and Claude (Anthropic). All AI-generated code was reviewed, tested, and validated by the authors.
-
-Repository polished with Claude Code.
-
-## Citation
-
-If you use this code or data, a citation is appreciated (though not required; see the licence).
-
-```bibtex
-@article{juzek-2026-ai-34-languages,
-  title   = {AI-Associated Lexical Shifts Across 34 Languages: Cross-Lingual Convergence and Diachronic Uptake in News Writing},
-  author  = {Juzek, Thomas Stephan},
-  journal = {arXiv preprint arXiv:2605.25358},
-  year    = {2026},
-  doi     = {10.48550/arXiv.2605.25358},
-  url     = {https://arxiv.org/abs/2605.25358}
-}
-```
-
 ## Licence
 
 - **Code:** MIT No Attribution (MIT-0). See [`LICENSE`](LICENSE). Use it freely, no attribution required.
@@ -281,3 +275,9 @@ If you use this code or data, a citation is appreciated (though not required; se
 A citation is not required but is appreciated; see the Citation section.
 
 The included paper PDF remains under its own terms (the arXiv preprint, the authors' own), separate from the code and data licences above.
+
+## AI Assistance
+
+The code in this repository was developed with AI assistance from GPT (OpenAI), Gemini (Google), and Claude (Anthropic). All AI-generated code was reviewed, tested, and validated by the authors.
+
+Repository polished with Claude Code.
